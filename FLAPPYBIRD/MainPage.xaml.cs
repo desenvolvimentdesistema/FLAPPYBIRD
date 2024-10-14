@@ -1,15 +1,15 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace FLAPPYBIRD;
+﻿namespace passarinho;
 
 public partial class MainPage : ContentPage
-{ 
-	const int Gravidade =1 ;//px/ms
-	const int TempoEntreFrames=25;//ms
-	bool EstaMorto = false;
-	double LarguraJanela = 0;
-	double AlturaJanela = 0;
-	int velocidade = 20;
+{
+    
+	const int gravidade =1 ;
+	const int tempoEntreFrames=25;
+	bool estaMorto = false;
+	double larguraJanela=0;
+	double alturaJanela=0;
+	int velocidade= 20;
+
 
 
 	public MainPage()
@@ -17,39 +17,50 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
-void AplicaGravidade(){
-    Passaro.TraslationY += Gravidade;
-}
-
-	public async void Desenha()
+	void AplicaGravidade()
 	{
-		while (!EstaMorto)
+    	Passaro.TranslationY += gravidade;
+	}
+ 	public async void Desenha()
+ 	{
+		while (!estaMorto)
 		{
 			AplicaGravidade();
-			await Task.Delay(TempoEntreFrames);
-			GerenciaCanos();
+			await Task.Delay(tempoEntreFrames);
+			GerenciaCanos ();
 		}
-	}
-	protected override void OnAppearing()
-{
-    base.OnAppearing();
-    Desenha();
-}
+ 	}
 
-	protected override void OnSizeAllocated(double w, double h)
+ 	void Oi (object s, TappedEventArgs e)
+ 	{
+		FrameGameOver.IsVisible = false;
+		estaMorto = false;
+		Inicializar();
+		Desenha();
+ 	}
+
+	void Inicializar()
 	{
-		base.OnSizeAllocated(w, h);
-		LarguraJanela = w;
-		AlturaJanela = h;
+		Passaro.TranslationY = 0;
 	}
-	void GerenciaCanos()
-	{
-		imageCanoCima.TranslationX -= velocidade;
-		imageCanoBaixo.TranslationX -= velocidade;
-		if(imageCanoBaixo.Translation < -LarguraJanela)
+
+	
+		protected override void OnSizeAllocated ( double w, double h)
 		{
-			imageCanoBaixo.TranslationX = 0;
-			imageCanoCima.TranslationX = 0;
+			base.OnSizeAllocated ( w,h);
+			larguraJanela= w;
+			alturaJanela= h ;
 		}
-	}
+
+		void GerenciaCanos ()
+		{
+			imgcanocima.TranslationX -= velocidade;
+			imgcanobaixo.TranslationX -= velocidade;
+			if ( imgcanobaixo.TranslationX < -larguraJanela)
+			{
+				imgcanobaixo.TranslationX = 0;
+				imgcanocima.TranslationX =0;
+			}
+		}
+	
 }
