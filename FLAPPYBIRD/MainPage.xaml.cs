@@ -1,14 +1,14 @@
-﻿namespace passarinho;
+﻿namespace FLAPPYBIRD;
 
 public partial class MainPage : ContentPage
 {
     
-	const int gravidade =1 ;
-	const int tempoEntreFrames=25;
-	bool estaMorto = false;
-	double larguraJanela=0;
-	double alturaJanela=0;
-	int velocidade= 20;
+	const int Gravidade =1 ;
+	const int TempoEntreFrames=25;
+	bool EstaMorto = false;
+	double LarguraJanela=0;
+	double AlturaJanela=0;
+	int Velocidade= 20;
 
 
 
@@ -19,48 +19,106 @@ public partial class MainPage : ContentPage
 
 	void AplicaGravidade()
 	{
-    	Passaro.TranslationY += gravidade;
+    	lilghost.TranslationY += Gravidade;
 	}
  	public async void Desenha()
  	{
-		while (!estaMorto)
+		while (!EstaMorto)
 		{
+			if (EstaPulando)
+				AplicaPulo();
+			else			
 			AplicaGravidade();
-			await Task.Delay(tempoEntreFrames);
 			GerenciaCanos ();
+			if (VerificaColisao())
+			{
+				EstaMorto = true;
+				FrameGameOver.IsVisible = true;
+				break;
+			}
+			await Task.Delay(TempoEntreFrames);
 		}
  	}
 
  	void Oi (object s, TappedEventArgs e)
  	{
 		FrameGameOver.IsVisible = false;
-		estaMorto = false;
+		EstaMorto = false;
 		Inicializar();
 		Desenha();
  	}
 
 	void Inicializar()
 	{
-		Passaro.TranslationY = 0;
+		lilghost.TranslationY = 0;
 	}
 
 	
 		protected override void OnSizeAllocated ( double w, double h)
 		{
 			base.OnSizeAllocated ( w,h);
-			larguraJanela= w;
-			alturaJanela= h ;
+			LarguraJanela= w;
+			AlturaJanela= h ;
 		}
 
 		void GerenciaCanos ()
 		{
-			imgcanocima.TranslationX -= velocidade;
-			imgcanobaixo.TranslationX -= velocidade;
-			if ( imgcanobaixo.TranslationX < -larguraJanela)
+			canocima.TranslationX -= Velocidade;
+			canobaixo.TranslationX -= Velocidade;
+			if ( canobaixo.TranslationX < -LarguraJanela)
 			{
-				imgcanobaixo.TranslationX = 0;
-				imgcanocima.TranslationX =0;
+				canobaixo.TranslationX = 0;
+				canocima.TranslationX =0;
 			}
+		}
+
+		bool VerificaColisaoTeto()
+		{
+			var maxY = -AlturaJanela/2;
+			if (lilghost.TranslationY <=minY)
+				return true;
+			else
+				return false;	
+		}
+
+		bool VerificaColisaoChao()
+		{
+			var maxY = AlturaJanela/2 - floor.HeightRequest;
+			if (lilghost.TranslationY >=maxY)
+				return true;
+			else
+				return false;	
+		}
+
+		bool VerificaColisao()
+		{
+			if(!EstaMorto)
+			{
+				if(VerificaColisaoTeto()  ||
+					VerificaColisaoChao())
+					{
+						return true;
+					}
+					{
+						return false;
+					}
+			}
+		}
+
+		void AplicaPulo()
+		{
+			imagelilghost. TranslationY -= ForcaPulo;
+			TempoPulando++;
+			if (tempoPulando >= maxTempoPulando)
+			{
+				EstaPulando = false;
+				TempoPulando = 0;
+			}
+		}
+
+		void OnGridClicked(object sender, TappedEventArgs a)
+		{
+			EstaPulando = true;
 		}
 	
 }

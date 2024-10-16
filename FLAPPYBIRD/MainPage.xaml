@@ -6,42 +6,43 @@
 
     <Grid>
 
-        <Image Source="fundo.png"
-               Aspect="AspectFill"
-               HorizontalOptions="Fill"
-               VerticalOptions="Fill"/>
+       <Image Source="lilghostbackgroud.jpg"
+              Aspect="AspectFill"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"/>
 
-        <Image Source="canocima.png"
-               x:Name="imgcanocima"
-               HeightRequest="300"
-               WidthRequest="100"
-               Aspect="AspectFit"
-               HorizontalOptions="End"
-               VerticalOptions="End"/>
+       <Image Source="canocima.png"
+              x:Name="canocima"
+              HeightRequest="300"
+              WidthRequest="100"
+              Aspect="AspectFit"
+              HorizontalOptions="End"
+              VerticalOptions="End"/>
 
-        <Image Source="canobaixo.png"
-               x:Name="imgcanobaixo"
-               HeightRequest="300"
-               WidthRequest="100"
-               Aspect="AspectFit"
-               HorizontalOptions="End"
-               VerticalOptions="Start"/>
+       <Image Source="canobaixo.png"
+              x:Name="canobaixo"
+              HeightRequest="300"
+              WidthRequest="100"
+              Aspect="AspectFit"
+              HorizontalOptions="End"
+              VerticalOptions="Start"/>
 
-        <Image Source="lilghost.jpg"
-               x:Name="Passaro"
-               HeightRequest="90"
-               WidthRequest="70"
-               Margin="30,0,0,0"
-               HorizontalOptions="Start"
-               VerticalOptions="Center"/>
+       <Image Source="lilghost.png"
+              x:Name="lilghost"
+              HeightRequest="90"
+              WidthRequest="70"
+              Margin="30,0,0,0"
+              HorizontalOptions="Start"
+              VerticalOptions="Center"/>
 
-        <Image Source="floor.png"
-               HeightRequest="90"
-               Aspect="AspectFill"
-               HorizontalOptions="Center"
-               VerticalOptions="End"/>
+       <Image Source="floor.png"
+              x:Name="floor"
+              HeightRequest="90"
+              Aspect="AspectFill"
+              HorizontalOptions="Center"
+              VerticalOptions="End"/>
 
-        <Frame
+       <Frame
             IsVisible="true"
             x:Name="FrameGameOver"
             BackgroundColor="#99000000"
@@ -52,9 +53,14 @@
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="Oi"/>
             </Frame.GestureRecognizers>
-            <Image Source= "inicio.png"
+            <Image Source= "startbutton.png"
              HeightRequest="195"
             WidthRequest="160"/>
+
+       <Grid>
+              <Grid.GestureRecognizers>
+               <TapGestureRecognizer Tapped="OnGridClicked"/>
+              </Grid.GestureRecognizers>
 
         </Frame>
 
